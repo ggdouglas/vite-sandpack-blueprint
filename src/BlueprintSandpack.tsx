@@ -17,6 +17,7 @@ function BlueprintSandpack() {
   return (
     <Sandpack
       template="react-ts"
+      theme="auto"
       customSetup={{ dependencies }}
       files={{ "/App.tsx": app }}
     />
