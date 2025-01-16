@@ -24,6 +24,30 @@ function App() {
       <Button text="Danger" intent="danger" />
     </div>`}
       </BlueprintSandpack>
+
+      <BlueprintSandpack
+        dependencies={{ "@blueprintjs/core": ["Button"] }}
+        title="Button Minimal Example"
+      >
+        {outdent`
+<div>
+      <Button text="Minimal" minimal={true} />
+      <Button text="Primary" minimal={true} intent="primary" />
+      <Button text="Disabled" minimal={true} disabled={true} />
+    </div>`}
+      </BlueprintSandpack>
+
+      <BlueprintSandpack
+        dependencies={{ "@blueprintjs/core": ["Button"] }}
+        title="Button Outlined Example"
+      >
+        {outdent`
+<div>
+      <Button text="Outlined" outlined={true} />
+      <Button text="Primary" outlined={true} intent="primary" />
+      <Button text="Disabled" minimal={true} disabled={true} />
+    </div>`}
+      </BlueprintSandpack>
     </div>
   );
 }
