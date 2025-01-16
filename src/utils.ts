@@ -1,4 +1,9 @@
+import { outdent } from "outdent";
+import { camelCase, upperFirst } from "lodash";
+
 const getKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>;
+
+const toPascalCase = (str: string) => upperFirst(camelCase(str));
 
 type BlueprintPackage = [
   "@blueprintjs/core",
@@ -71,9 +76,24 @@ export const constructComponentImports = (
 
 export function constructAppString(
   code: string,
-  componentDependencies: ComponentDependencies
+  componentDependencies: ComponentDependencies,
+  title = "App"
 ) {
   const imports = constructComponentImports(componentDependencies);
-  const styles = constructStyles(componentDependencies);
-  return `${imports}\n${styles}\n\nexport default function App() {\n  return (\n    ${code}\n  );\n}`;
+  return `${imports}\n\nexport default function ${toPascalCase(
+    title
+  )}() {\n  return (\n    ${code}\n  );\n}`;
+}
+
+export function constructIndexString(
+  componentDependencies: ComponentDependencies
+) {
+  return outdent`
+    import { createRoot } from "react-dom/client";
+    import { FocusStyleManager } from "@blueprintjs/core";
+    ${constructStyles(componentDependencies)}
+    import App from "./App";
+    FocusStyleManager.onlyShowFocusOnTabs();
+    const root = createRoot(document.getElementById("root") as HTMLElement);
+    root.render(<App />);`;
 }
