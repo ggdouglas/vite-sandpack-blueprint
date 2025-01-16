@@ -1,27 +1,26 @@
 import { Sandpack } from "@codesandbox/sandpack-react";
+import {
+  ComponentDependencies,
+  constructAppString,
+  getDependencies,
+} from "./utils";
+export interface BlueprintSandpackProps {
+  children: string;
+  dependencies: ComponentDependencies;
+}
 
-const app = `import { Button } from "@blueprintjs/core";
-import "@blueprintjs/core/lib/css/blueprint.css";
-
-export default function App() {
-  return (
-    <Button intent="primary" text="Hello, Blueprint!" />
-  );
-}`;
-
-const dependencies = {
-  "@blueprintjs/core": "5.16.4",
-};
-
-function BlueprintSandpack() {
+function BlueprintSandpack({
+  children,
+  dependencies: componentDependencies,
+}: BlueprintSandpackProps) {
+  const app = constructAppString(children, componentDependencies);
   return (
     <Sandpack
       template="react-ts"
       theme="auto"
-      customSetup={{ dependencies }}
+      customSetup={{ dependencies: getDependencies(componentDependencies) }}
       files={{ "/App.tsx": app }}
     />
   );
 }
-
 export default BlueprintSandpack;
